@@ -1,2 +1,2 @@
-# freemework
-FreeMeWork PHP Framework
+# FreeMeWork
+FreeMeWork PHP Framework - Complete tools for development web applications.
