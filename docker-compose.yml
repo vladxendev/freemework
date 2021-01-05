@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+    db:
+      build:
+        context: .
+        dockerfile: docker/postgres/Dockerfile
+        args:
+          DB_LOCALE: $DB_LOCALE
+      container_name: postgres
+      restart: always
+      env_file:
+        - .env
+      environment:
+        - POSTGRES_DB=${DB_NAME}
+        - POSTGRES_USER=${DB_USER}
+        - POSTGRES_PASSWORD=${DB_PASSWORD}
+      ports:
+        - "${DB_PORT}:${DB_PORT}"
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+      networks:
+        - backend
+
+    php:
+      build:
+        context: .
+        dockerfile: docker/php/Dockerfile
+        args:
+          FMW_WORKDIR: $FMW_WORKDIR
+      container_name: php
+      restart: always
+      env_file:
+        - .env
+      depends_on:
+        - db
+      ports:
+        - "${PHP_PORT}:${PHP_PORT}"
+      volumes:
+        - .:${FMW_WORKDIR}
+      networks:
+        - backend
+
+    apache:
+      build:
+        context: .
+        dockerfile: docker/apache/Dockerfile
+        args:
+          FMW_WORKDIR: $FMW_WORKDIR
+          FMW_DOCUMENT_ROOT: $FMW_DOCUMENT_ROOT
+      container_name: apache
+      restart: always
+      domainname: localhost
+      hostname: localhost
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - .:${FMW_WORKDIR}
+      depends_on:
+        - db
+        - php
+      networks:
+        - backend
+
+volumes:
+  pgdata:
+          
+networks:
+  backend:
