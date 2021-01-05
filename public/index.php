@@ -4,6 +4,7 @@ use Laminas\Diactoros\{ServerRequestFactory, ResponseFactory, Response};
 use Laminas\HttpHandlerRunner\Emitter\{EmitterStack, SapiEmitter};
 use Laminas\HttpHandlerRunner\RequestHandlerRunner;
 use Laminas\Stratigility\MiddlewarePipe;
+use Freemework\Container\Container;
 
 // Debug mode functions
 ini_set('error_reporting', E_ALL);
@@ -21,6 +22,7 @@ if (file_exists(ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
     throw new DomainException('Composer: Autoload file vendor/autoload.php not exist.');
 }
 
+$container = new Container([]);
 $request = ServerRequestFactory::fromGlobals();
 $pipeline = new MiddlewarePipe();
 $response = new Response();
