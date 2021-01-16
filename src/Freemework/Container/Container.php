@@ -65,7 +65,7 @@ class Container implements ContainerInterface
      *
      * @return bool
      */
-    public function has($id) : bool
+    public function has($id): bool
     {
         try {
             $item = $this->resolve($id);
@@ -87,7 +87,7 @@ class Container implements ContainerInterface
      * 
      * @return self
      */
-    public function set(string $key, $value) : self
+    public function set(string $key, $value): self
     {
         if (isset($this->instances[$key])) {
             unset($this->instances[$key]);
@@ -101,6 +101,11 @@ class Container implements ContainerInterface
         return $this;
     }
 
+    /**
+     * @param string $id Identifier of the entry to look for.
+     *
+     * @return mixed Resolved object
+     */
     private function resolve($id)
     {
         try {
@@ -120,6 +125,11 @@ class Container implements ContainerInterface
         }
     }
 
+    /**
+     * @param ReflectionClass $reflector Resolve class.
+     *
+     * @return mixed Object instance
+     */
     private function getInstance(ReflectionClass $reflector)
     {
         /** @var ReflectionMethod | null $constructor */
@@ -144,11 +154,11 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param array $parameters
-     * @return array
+     * @param array $parameters Constructor arguments
+     * @return array $dependencies Constructor autowired dependencies
      * @throws ContainerException
      */
-	public function getDependencies($parameters) : array
+	public function getDependencies($parameters): array
 	{
         $dependencies = [];
         
