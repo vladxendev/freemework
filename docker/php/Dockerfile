@@ -1,4 +1,4 @@
-FROM php:7.4.13-fpm
+FROM php:7.4.22-fpm
 
 ARG FMW_WORKDIR
 

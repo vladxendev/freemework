@@ -8,13 +8,6 @@ use Freemework\Container\Exception\{NotFoundException, ContainerException};
 
 class ContainerTest extends TestCase
 {
-    public function testInitContainer()
-    {
-        $dependencies = [];
-        $container = new Container($dependencies);
-        self::assertEquals(new Container($dependencies), $container);
-    }
-
     public function testPrimitives()
     {
         $container = new Container();

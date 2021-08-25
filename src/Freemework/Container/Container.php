@@ -29,14 +29,6 @@ class Container implements ContainerInterface
 	 */
     protected $instances = [];
 
-	/**
-	 * @param array $dependencies Default dependencies.
-	 */
-    public function __construct(array $dependencies = [])
-    {
-        $this->services = $dependencies;
-    }
-
     /**
      * @param string $id Identifier of the entry to look for.
      *
